@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Cards, CountryPicker, Chart } from "./components";
 import { fetchData } from "./api";
+import { CircularProgress } from "@material-ui/core";
 import styles from "./App.module.css";
 
 export default class App extends Component {
@@ -28,15 +29,20 @@ export default class App extends Component {
 
   render() {
     const { data, loaded, country } = this.state;
-    if (!loaded) return <div>Loading ...</div>;
     return (
       <div className={styles.container}>
-        <Cards {...data} />
-        <CountryPicker
-          value={country}
-          handleCountryChange={this.handleCountryChange}
-        />
-        <Chart data={data} country={country} />
+        {loaded ? (
+          <>
+            <Cards {...data} />
+            <CountryPicker
+              value={country}
+              handleCountryChange={this.handleCountryChange}
+            />
+            <Chart data={data} country={country} />
+          </>
+        ) : (
+          <CircularProgress />
+        )}
       </div>
     );
   }
