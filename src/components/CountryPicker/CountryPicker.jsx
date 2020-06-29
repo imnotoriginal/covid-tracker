@@ -1,10 +1,11 @@
 import React from "react";
+import { NativeSelect, FormControl } from "@material-ui/core";
 
 const CountryPicker = () => {
   return (
-    <div>
-      <h1>CountryPicker</h1>
-    </div>
+    <FormControl>
+      <NativeSelect></NativeSelect>
+    </FormControl>
   );
 };
 
