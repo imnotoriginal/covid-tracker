@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Cards, CountryPicker, Chart } from "./components";
 import { fetchData } from "./api";
-import { CircularProgress } from "@material-ui/core";
+import { CircularProgress, Typography } from "@material-ui/core";
 import styles from "./App.module.css";
 
 export default class App extends Component {
@@ -33,6 +33,14 @@ export default class App extends Component {
       <div className={styles.container}>
         {loaded ? (
           <>
+            <Typography
+              variant="h3"
+              color="textSecondary"
+              align="center"
+              gutterBottom
+            >
+              Covid-tracker
+            </Typography>
             <Cards {...data} />
             <CountryPicker
               value={country}
