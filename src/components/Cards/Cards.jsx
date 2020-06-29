@@ -4,88 +4,50 @@ import CountUp from "react-countup";
 import classes from "classnames";
 import styles from "./Cards.module.css";
 
-const Cards = ({ confirmed, recovered, deaths, lastUpdate }) => {
+const Cards = ({ lastUpdate, ...data }) => {
   const date = new Date(lastUpdate).toDateString();
+  const cards = [
+    {
+      prop: "confirmed",
+      name: "Infected",
+      description: "Number of active cases of COVID-19",
+    },
+    {
+      prop: "recovered",
+      name: "Recovered",
+      description: "Number of recoveries from COVID-19",
+    },
+    {
+      prop: "deaths",
+      name: "Deaths",
+      description: "Number of deaths cased by COVID-19",
+    },
+  ];
+
   return (
     <div className={styles.container}>
-      <Grid container spacing={3} justify="center">
-        <Grid
-          item
-          component={Card}
-          xs={12}
-          md={3}
-          className={classes(styles.card, styles.infected)}
-        >
-          <CardContent>
-            <Typography color="textSecondary" gutterBottom>
-              Infected
-            </Typography>
-            <Typography variant="h5">
-              <CountUp
-                start={0}
-                end={confirmed.value}
-                duration={2.5}
-                separator="'"
-              />
-            </Typography>
-            <Typography color="textSecondary">{date}</Typography>
-            <Typography variant="body2">
-              Number of active cases of COVID-19
-            </Typography>
-          </CardContent>
-        </Grid>
-
-        <Grid
-          item
-          component={Card}
-          xs={12}
-          md={3}
-          className={classes(styles.card, styles.recovered)}
-        >
-          <CardContent>
-            <Typography color="textSecondary" gutterBottom>
-              Recovered
-            </Typography>
-            <Typography variant="h5">
-              <CountUp
-                start={0}
-                end={recovered.value}
-                duration={2.5}
-                separator="'"
-              />
-            </Typography>
-            <Typography color="textSecondary">{date}</Typography>
-            <Typography variant="body2">
-              Number of recoveries from COVID-19
-            </Typography>
-          </CardContent>
-        </Grid>
-
-        <Grid
-          item
-          component={Card}
-          xs={12}
-          md={3}
-          className={classes(styles.card, styles.deaths)}
-        >
-          <CardContent>
-            <Typography color="textSecondary" gutterBottom>
-              Deaths
-            </Typography>
-            <Typography variant="h5">
-              <CountUp
-                start={0}
-                end={deaths.value}
-                duration={2.5}
-                separator="'"
-              />
-            </Typography>
-            <Typography color="textSecondary">{date}</Typography>
-            <Typography variant="body2">
-              Number of deaths cased by COVID-19
-            </Typography>
-          </CardContent>
-        </Grid>
+      <Grid container justify="center" spacing={3}>
+        {cards.map(({ prop, name, description }, index) => (
+          <Grid key={index} item xs={12} sm={8} md={4}>
+            <Card className={classes(styles.card, styles[name.toLowerCase()])}>
+              <CardContent>
+                <Typography color="textSecondary" gutterBottom>
+                  {name}
+                </Typography>
+                <Typography variant="h5">
+                  <CountUp
+                    start={0}
+                    end={data[prop].value}
+                    duration={2.5}
+                    separator="'"
+                  />
+                </Typography>
+                <Typography color="textSecondary">{date}</Typography>
+                <Typography variant="body2">{description}</Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+        ))}
       </Grid>
     </div>
   );
