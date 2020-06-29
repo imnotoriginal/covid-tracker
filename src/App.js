@@ -6,18 +6,20 @@ import styles from "./App.module.css";
 export default class App extends Component {
   state = {
     data: {},
+    loaded: false,
   };
 
   async componentDidMount() {
     const data = await fetchData();
-    this.setState({ data });
+    this.setState({ data, loaded: true });
   }
 
   render() {
-    const { data } = this.state;
+    const { data, loaded } = this.state;
+    if (!loaded) return <div>Loading ...</div>;
     return (
       <div className={styles.container}>
-        <Cards data={data} />
+        <Cards {...data} />
         <CountryPicker />
         <Chart />
       </div>
